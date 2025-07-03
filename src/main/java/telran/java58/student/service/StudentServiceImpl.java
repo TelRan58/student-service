@@ -1,8 +1,6 @@
 package telran.java58.student.service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import telran.java58.student.dao.StudentRepository;
 import telran.java58.student.dto.ScoreDto;
@@ -52,6 +50,7 @@ public class StudentServiceImpl implements StudentService {
         if (studentUpdateDto.getPassword() != null) {
             student.setPassword(studentUpdateDto.getPassword());
         }
+        studentRepository.save(student);
         return new StudentCredentialsDto(student.getId(), student.getName(), student.getPassword());
 
     }
@@ -60,6 +59,7 @@ public class StudentServiceImpl implements StudentService {
     public void addScore(Long id, ScoreDto scoreDto) {
         Student student = studentRepository.findById(id).orElseThrow(NotFoundException::new);
         student.addScore(scoreDto.getExamName(), scoreDto.getScore());
+        studentRepository.save(student);
     }
 
     @Override
