@@ -156,8 +156,8 @@ public class StudentServiceTest {
         // Asserts
         assertNotNull(students);
         assertEquals(1, students.size());
-        assertEquals(studentId, students.get(0).getId());
-        assertEquals(name, students.get(0).getName());
+        assertEquals(studentId, students.getFirst().getId());
+        assertEquals(name, students.getFirst().getName());
     }
 
     @Test
@@ -188,7 +188,7 @@ public class StudentServiceTest {
         // Assert
         assertNotNull(students);
         assertEquals(1, students.size());
-        assertEquals(studentId, students.get(0).getId());
-        assertEquals(name, students.get(0).getName());
+        assertEquals(studentId, students.getFirst().getId());
+        assertEquals(name, students.getFirst().getName());
     }
 }

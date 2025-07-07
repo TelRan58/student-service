@@ -3,13 +3,11 @@ package telran.java58.student.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import telran.java58.student.dto.ScoreDto;
 import telran.java58.student.dto.StudentCredentialsDto;
 import telran.java58.student.dto.StudentDto;
@@ -27,36 +25,32 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(StudentController.class)
 public class StudentControllerTest {
 
+    @Autowired
     private MockMvc mockMvc;
 
-    @Mock
+    @MockitoBean
     private StudentService studentService;
 
-    @InjectMocks
-    private StudentController studentController;
-
-    private ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private final Long studentId = 1000L;
     private final String name = "John";
-    private final String password = "1234";
     private StudentCredentialsDto studentCredentialsDto;
     private StudentDto studentDto;
-    private Map<String, Integer> scores;
 
     @BeforeEach
     void setUp() {
-        scores = new HashMap<>();
+        Map<String, Integer> scores = new HashMap<>();
         scores.put("Math", 95);
         scores.put("History", 85);
 
+        String password = "1234";
         studentCredentialsDto = new StudentCredentialsDto(studentId, name, password);
         studentDto = new StudentDto(studentId, name, scores);
-
-        mockMvc = MockMvcBuilders.standaloneSetup(studentController).build();
     }
 
     @Test
