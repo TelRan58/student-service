@@ -12,6 +12,6 @@ public interface StudentRepository extends MongoRepository<Student, Long> {
 
     Long countByNameInIgnoreCase(Set<String> names);
 
-    @Query("{'scores.Math': {'$gt': 90}}")
+    @Query("{'scores.?0': {'$gt': ?1}}")
     Stream<Student> findByExamAndScoreGreaterThan(String exam, int score);
 }
